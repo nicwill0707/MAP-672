@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Lab 04 Starter Template</title>
+    <title>A few North American cities</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css" />
@@ -67,15 +67,15 @@
     <div id='map'></div>
 
 	<section>
-		
+
 		<h2>about this map</h2>
-		
+
 		<p>Map authored by me, Nic Williamson</p>
 
 		<p>This map, though seemingly random and limited in its ability to dissiminate vast and useful knowledge, represents several breakthroughs in web programming and mapping in my continuing education in MAP672. </p>
 
 	</section>
-	
+
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
     <script>
@@ -85,72 +85,61 @@
             center: [33, -92],
             zoom: 4
         }
-		
+
 		// instantiate Leaflet map object
         var map = L.map('map', options);
-        
+
 		// request remote basemap tiles
 		var tiles = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
 });
 		// add tiles to map
         map.addLayer(tiles);
-            
+
 		// variable to hold string value of city name
 		// var cityName = "Denver";
-		
+
 		// variable to hold number value of city population
 		// var cityPopulation = 649495;
-        
+
 		// build a string with HTML tags and content
-                
+
         //var popup = "<b>" + cityName + "</b><br>" +
                     //"<b>population</b>: " + cityPopulation;
 
         // create a Leaflet marker at the coordinates of Denver, CO
 		// add it to the map
 		// and bind the popup content to the marker.
-        
+
         var cities = ["Ottawa", "Mexico City", "Omaha"];
         console.log(cities)
-        
-        var cityCoords = [ 
+
+        var cityCoords = [
             [45.4215, -75.6972],
             [19.2465, -99.1013],
             [41.2524, -95.9980]
         ];
-        
+
         var cityPops = [883391, 8851000, 434353];
-        
+
         var cityCapital = [true, true, false]
-                
+
         for (var i = 0; i < cities.length; i++) {
-        
-            var city = cities[i]
-            console.log(city);
-            
-            var cityCoord = cityCoords[i];
-            console.log(cityCoord);
-            
-            var cityPop = cityPops[i];
-            console.log(cityPop);
-            
-            var cityCapitals = cityCapital[i];
-        
-            var popup = "<b>" + city + "</b><br>" +
-                    "<b>Population: </b>" + cityPop;
-            
-           if(cityCapitals == true) {
-               popup += "<br>Is this country's capital city";   
-        } else {
-        popup += "<br> Is not this country's capital city, and according to Adam Duritz, is 'somewhere in middle America'";
-    }
-                      
-        L.marker(cityCoord).addTo(map)
-			.bindPopup(popup);
-                
+
+            var popup = "<b>" + cities[i]+ "</b><br>" +
+                    "<b>Population: </b>" + cityPops[i].toLocaleString();
+
+           if(cityCapital[i] == true) {
+                       popup += "<br>Is this country's capital city";
+                } else {
+                popup += "<br> Is not this country's capital city, and according to Adam Duritz, is 'somewhere in middle America'";
+            }
+
+            L.marker(cityCoords[i]).addTo(map)
+    			     .bindPopup(popup);
+
         }
-        
+
     </script>
-    
+
 </body>
