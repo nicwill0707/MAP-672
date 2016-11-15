@@ -106,11 +106,22 @@
 
 		// adds these tiles to the map
 		map.addLayer(tiles);
-
-		//    var cities = // write 3 city names as Strings within an array
+        
+       	//    var cities = // write 3 city names as Strings within an array
+        var cities = ["Ottawa", "Mexico City", "Omaha"];
+        
 		//    var cityCoords = // write a two-dimensional array of the coordinates for each city
-		//    var cityPops = // write the populations of the 3 cities as Numbers within an array;
+		var cityCoords = [ 
+            [45.4215, -75.6972],
+            [19.2465, -99.1013],
+            [41.2524, -95.9980]
+        ];
+        
+        //    var cityPops = // write the populations of the 3 cities as Numbers within an array;
+        var cityPops = [883391, 8851000, 434353];
+        
 		//    var cityAreas = // write the areas of the 3 cities as Numbers within an array;
+        var cityArea = [1073, 573, 131]
 
 		var button = document.getElementById("map-cities");
 
@@ -118,20 +129,50 @@
 
 			var units = prompt('Enter the units for calculating density', 'Enter "miles" or "km"');
 
-			console.log(units);
-
 			// call a function named mapCities, and send the units variable as an argument
+            
+            mapCities(units);
 
 		}); // addEventListener callback function ends here
 
 
 		// write a function here named mapCities so that it accepts units as a parameter
 
-
+            function mapCities(units){
+                
+                for (var i = 0; i < cities.length; i++)                            
+                    
+                    var cityNam = cities[i]
+                    
+                    calcPopDensity(cityPops, cityArea, units);
+                                        
+                    }
+                               
 		// write a function named calcPopDensity here so that it accepts a 
 		// single city's population, area, and the value for units 
 		// determined by the user
 		
+          function calcPopDensity(){
+              
+              }
+          
+                    
+            for (var i = 0; i < cities.length; i++) {
+
+                var cityNam = cities[i]
+            
+                var density = cityPops[i] / cityArea[i]
+            
+                var nameAndPop = cityNam + "'s population density is" + " " + (density.toLocaleString(density));
+                console.log(nameAndPop);
+            
+            var popup = "<b>" + cityNam + "</b><br>" +
+                    "<b>Population Density</b>: " + (density.toLocaleString(density)); 
+              
+           L.marker(cityCoords[i]).addTo(map)
+                .bindPopup(popup);
+             
+        }    
 		
 	</script>
 
