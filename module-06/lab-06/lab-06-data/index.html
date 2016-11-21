@@ -136,21 +136,40 @@
             
 //            console.log(props);    
             
+            // create a variable to store the popup content for each city
+            
             var popup = "I am a temporary string value"
             
             L.marker(props.coordinates).addTo(map)
                         .bindPopup(popup); 
+            
+            // retrieve this content with a call to a function that will
+        // assign a CSS class name to a variable used to color the text
+            
+            buildPopup(city, pop, state);
                                                 
             }
+        
+        function buildPopup (city, pop, state) {
             
-        // create a variable to store the popup content for each city
+            if(state === "WA"){
+                var colorClass = "washington-purple";
+              }
+            if else(state === "OR"){
+                var colorClass = "oregon-green";
+              }
+            if else(state === "ID");{
+                var colorClass = "idaho-pink"
+              }
+        }
+            
         
         
         
         
         
-        // retrieve this content with a call to a function that will
-        // assign a CSS class name to a variable used to color the text
+        
+        
         // return a string concatenating the name and population of each city within HTML // assign the return value of the function to the popup variable
         // create a Leaflet marker with the city's coordinates and bind the popup
     </script>
