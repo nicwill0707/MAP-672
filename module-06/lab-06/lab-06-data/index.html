@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Lab 06 Starter</title>
+    <title>N Williamson Lab 6 Attempt</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css" />
@@ -48,6 +48,26 @@
             text-decoration: none;
         }
         
+        washington-purple {
+            color: #df42f4;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        oregon-green {
+            color: #26a008;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        idaho-pink {
+           color: #ff63f4;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        
+        
         a:hover {
             text-decoration: underline;
         }
@@ -62,16 +82,16 @@
 </head>
 
 <body>
-    <h1>map title</h1>
+    <h1>Northwest U.S. cities (in black and white)...</h1>
 
     <div id='map'></div>
 
 
     <section>
 
-        <p>Map authored by me, MY NAME</p>
+        <p>Map authored by me, Nic Williamson</p>
 
-        <p>Additional information about <a href="#">the data</a> and map goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. </p>
+        <p>This map shows several cities in the Northwest U.S. which would probably be nice places to visit between hikes in some of the amazing locales in Washington, Oregon, and Idaho. These states provide ample opportunity for outdoor pursuits. If the map creator was more adept, each state's popup would even be a different color! </p>
 
     </section>
 
@@ -130,6 +150,8 @@
             
             var props = cities[i].properties; 
             
+            var pop = props.population;
+            
 //            console.log(cities[i].properties);
 //            
 //            console.log(cities[i].properties.state);
@@ -138,7 +160,9 @@
             
             // create a variable to store the popup content for each city
             
-            var popup = "I am a temporary string value"
+//        var popup = 
+            
+            var popup = buildPopup(cities[i].name, props.population, props.state); 
             
             L.marker(props.coordinates).addTo(map)
                         .bindPopup(popup); 
@@ -146,32 +170,35 @@
             // retrieve this content with a call to a function that will
         // assign a CSS class name to a variable used to color the text
             
-            buildPopup(city, pop, state);
                                                 
             }
         
         function buildPopup (city, pop, state) {
             
-            if(state === "WA"){
+            if(state === "WA") {
                 var colorClass = "washington-purple";
               }
-            if else(state === "OR"){
+            if(state === "OR") {
                 var colorClass = "oregon-green";
               }
-            if else(state === "ID");{
-                var colorClass = "idaho-pink"
+            if(state === "ID") {
+                var colorClass = "idaho-pink";
               }
-        }
+                    
+            console.log(city, pop, state);
             
+            console.log(colorClass);
+            
+            return "<div class='"+colorClass+"'><b>"+city+"</b><br>"+
+                    "<b>Population</b>: "+pop.toLocaleString()+"<div>";
         
+        }
         
-        
-        
-        
-        
-        
-        // return a string concatenating the name and population of each city within HTML // assign the return value of the function to the popup variable
+        // return a string concatenating the name and population of each city within HTML 
+        // assign the return value of the function to the popup variable
         // create a Leaflet marker with the city's coordinates and bind the popup
+        
+        
     </script>
 
 </body>
