@@ -19,59 +19,59 @@
             font-family: "Noto Sans", sans-serif;
             color: #3d3d3d;
         }
-        
+
         section {
             width: 960px;
             margin: 20px auto;
         }
-        
+
         h1 {
             width: 960px;
             margin: 20px auto;
             font-family: "Lora", serif;
             letter-spacing: .04em;
         }
-        
+
         h2 {
             font-family: "Lora", serif;
             letter-spacing: .04em;
         }
-        
+
         p {
             font-size: 1em;
             line-height: 1.5em;
         }
-        
+
         a {
             color: #005daa;
             font-weight: bold;
             text-decoration: none;
         }
-        
-        washington-purple {
+
+        .washington-purple {
             color: #df42f4;
             font-weight: bold;
             text-decoration: none;
         }
-        
-        oregon-green {
+
+        .oregon-green {
             color: #26a008;
             font-weight: bold;
             text-decoration: none;
         }
-        
-        idaho-pink {
+
+        .idaho-pink {
            color: #ff63f4;
             font-weight: bold;
             text-decoration: none;
         }
-        
-        
-        
+
+
+
         a:hover {
             text-decoration: underline;
         }
-        
+
         #map {
             width: 960px;
             height: 540px;
@@ -145,36 +145,36 @@
 
         // loop through each city and
         // create a variable to access each city's properties
-        
+
         for (var i = 0; i < cities.length; i++) {
-            
-            var props = cities[i].properties; 
-            
+
+            var props = cities[i].properties;
+
             var pop = props.population;
-            
+
 //            console.log(cities[i].properties);
-//            
+//
 //            console.log(cities[i].properties.state);
-            
-//            console.log(props);    
-            
+
+//            console.log(props);
+
             // create a variable to store the popup content for each city
-            
-//        var popup = 
-            
-            var popup = buildPopup(cities[i].name, props.population, props.state); 
-            
+
+//        var popup =
+
+            var popup = buildPopup(cities[i].name, props.population, props.state);
+
             L.marker(props.coordinates).addTo(map)
-                        .bindPopup(popup); 
-            
+                        .bindPopup(popup);
+
             // retrieve this content with a call to a function that will
         // assign a CSS class name to a variable used to color the text
-            
-                                                
+
+
             }
-        
+
         function buildPopup (city, pop, state) {
-            
+
             if(state === "WA") {
                 var colorClass = "washington-purple";
               }
@@ -184,21 +184,21 @@
             if(state === "ID") {
                 var colorClass = "idaho-pink";
               }
-                    
+
             console.log(city, pop, state);
-            
+
             console.log(colorClass);
-            
+
             return "<div class='"+colorClass+"'><b>"+city+"</b><br>"+
                     "<b>Population</b>: "+pop.toLocaleString()+"<div>";
-        
+
         }
-        
-        // return a string concatenating the name and population of each city within HTML 
+
+        // return a string concatenating the name and population of each city within HTML
         // assign the return value of the function to the popup variable
         // create a Leaflet marker with the city's coordinates and bind the popup
-        
-        
+
+
     </script>
 
 </body>
