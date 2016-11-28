@@ -7,88 +7,230 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css" />
-  	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
-  	<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
-  	<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
 
     <style>
-  		body {
-  			margin: 0;
-  			padding: 0;
-  			background: whitesmoke;
-  			font-family: "Noto Sans", sans-serif;
-  			color: #3d3d3d;
-  		}
-
-      	section {
-  			width: 960px;
-  			margin: 20px auto;
-  		}
-
-  		h1 {
-  			width: 960px;
-  			margin: 20px auto;
-  			font-family: "Lora", serif;
-  			letter-spacing: .04em;
-  		}
-
-  		h2 {
-  			font-family: "Lora", serif;
-  			letter-spacing: .04em;
-  		}
-
-  		p {
-  			font-size: 1em;
-  			line-height: 1.5em;
-  		}
-
-  		a {
-  			color: #005daa;
-        		font-weight: bold;
-  			text-decoration: none;
-  		}
-
-  		a:hover {
-  			text-decoration: underline;
-  		}
-
-  		ul {
-  			padding-left: 20px;
-  		}
-
-  		li {
-  			margin: 10px 0
-  		}
-
-  		#map {
-  		  width: 960px;
-  		  height: 540px;
-  		  margin: 10px auto;
-  		  border: 2px solid #d3d3d3;
-  		}
-  	</style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: "Noto Sans", sans-serif;
+            color: #3d3d3d;
+        }
+        
+        section {
+            width: 960px;
+            margin: 20px auto;
+        }
+        
+        h1 {
+            width: 960px;
+            margin: 20px auto;
+            font-family: "Lora", serif;
+            letter-spacing: .04em;
+        }
+        
+        h2 {
+            font-family: "Lora", serif;
+            letter-spacing: .04em;
+        }
+        
+        p {
+            font-size: 1em;
+            line-height: 1.5em;
+        }
+        
+        a {
+            color: #005daa;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        ul {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin: 10px 0
+        }
+        
+        #map {
+            width: 960px;
+            height: 540px;
+            margin: 10px auto;
+            border: 2px solid #d3d3d3;
+        }
+    </style>
 </head>
 
 <body>
-  <h1>This is the title to my awesome map.</h1>
+    <h1>This is the title to my awesome map.</h1>
 
- <div id='map'></div>
+    <div id='map'></div>
 
- <section>
-   <h2>about this map</h2>
+    <section>
+        <h2>about this map</h2>
 
-   <p>Map authored by me, MY NAME</p>
+        <p>Map authored by me, MY NAME</p>
 
-   <p>Additional information about <a href="#">the data</a> and map goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. </p>
+        <p>Additional information about <a href="#">the data</a> and map goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. </p>
 
- </section>
+    </section>
 
     <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-  	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
     <script>
+        // build your Leaflet map here!
 
-      // build your Leaflet map here!
+        var mapCenter = L.latLng(38.0489, -96.5025);
+        var otherCity = L.latLng(38.1489, -96.5125);
+        var distance = mapCenter.distanceTo(otherCity);
+        console.log(distance); // will output distance between cities in meters
 
+        var options = {
+            center: [38.0489, -96.5025],
+            zoom: 4, // initial zoom level
+            minZoom: 4
+        }
+
+        var map = L.map('map', options);
+
+
+        var tiles = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        });
+
+        map.addLayer(tiles);
+
+        //        var redIguanaLocation = L.latLng(40.7718, -111.9124);
+        //        var redIguanaMarker = L.marker(redIguanaLocation, {
+        //            draggable: true
+        //        });
+        //        redIguanaMarker.addTo(map);
+        //        redIguanaMarker.on('dragend', function (e) {
+        //            console.log(e.target.getLatLng());
+        //        });
+
+        //        var redIguanaLocation = L.latLng(40.7718, -111.9124);
+        //        var redIguanaMarker = L.marker(redIguanaLocation);
+        //        redIguanaMarker.addTo(map);
+        //        redIguanaMarker.bindPopup("Best Mexican food in Salt Lake City!");
+
+        //        var redIguanaLocation = L.latLng(40.7718, -111.9124);
+        //        var redIguanaCircle = L.circle(redIguanaLocation, 400);
+        //        redIguanaCircle.addTo(map);
+        //
+        //        redIguanaCircle.setStyle({
+        //            color: "#d72b1e", // sets stroke color to red
+        //            weight: 15, // sets the stroke width to 15 pixels
+        //            fillColor: "#d72b1e", // sets fill color to red
+        //            fillOpacity: 1 // sets the fill opacity to 1
+        //        });
+
+        //        var redIguanaLocation = L.latLng(40.7718, -111.9124);
+        //        var redIguanaCircle = L.circle();
+        //        redIguanaCircle.setLatLng(redIguanaLocation);
+        //        redIguanaCircle.setRadius(400);
+        //        redIguanaCircle.addTo(map);
+
+        //        var iguanaRestaurants = L.layerGroup();
+        //        var redIguana = L.circle([40.7718, -111.9124], 400);
+        //        redIguana.addTo(iguanaRestaurants);
+        //        var blueIguana = L.circle([40.7657, -111.8930], 300);
+        //        blueIguana.addTo(iguanaRestaurants);
+        //        iguanaRestaurants.addTo(map);
+        //
+        //        iguanaRestaurants.eachLayer(function (layer) {
+        //            layer.on('mouseover', function (e) {
+        //                e.target.setStyle({
+        //                    color: 'yellow',
+        //                    fillColor: 'yellow'
+        //                });
+        //            });
+        //            layer.on('mouseout', function (e) {
+        //                e.target.setStyle({
+        //                    color: '#03f',
+        //                    fillColor: '#03f'
+        //                });
+        //            });
+        //        });
+
+
+        //**//
+        //
+        //**Start PARTIAL CREDIT...code line descriptions**//
+        //
+        //**//
+        
+        //create layer group and associatied variable to hold our two igauna restuarants//
+
+        var iguanaRestaurants = L.layerGroup();
+        
+        //create options (key/value pairs) to modify stroke and fill color of each circle class instantiation//
+        //...for one set of options use hex value,//
+        //for the other use html base colors (ex: 'red')//
+        
+        var redIguanaOptions = {
+            color: 'red',
+            fillColor: 'red'
+        };
+        var blueIguanaOptions = {
+            color: '#03f',
+            fillColor: '#03f'
+        };
+        
+        //use the SVG (scalable vector graphics) element Circle//
+        //to create a circle method//
+        //passing the LatLng object and circle radius (required objects)...//
+        //in addition to a third arguement <Path options>//
+        //which will pass the above variables modifying the stroke and fill colors//
+        //of the two circle classes//
+        
+        //assign the circle method to a unique variable based on iguana (circle) color//
+        
+        //use dot notation to create a color property//
+        //assign it a respective value ('red' or 'blue')//
+        
+        //use method addTo() to add each unique variable to iguanaResturants layer group//
+        //then add this layer group to map//
+                
+        var redIguana = L.circle([40.7718, -111.9124], 400, redIguanaOptions);
+        redIguana.color = 'red';
+        redIguana.addTo(iguanaRestaurants);
+        var blueIguana = L.circle([40.7657, -111.8930], 300, blueIguanaOptions);
+        blueIguana.color = 'blue';
+        blueIguana.addTo(iguanaRestaurants);
+        iguanaRestaurants.addTo(map);
+        
+        //use Leaflet's eachLayer method and loop through all layers in our layer group//
+        //apply a hover affordance to group layer, turning circle yellow on mouseover//
+        
+        //apply an additional hover affordance to group layer//
+        //this affordance will be a conditional statement on mouseout//
+        //utilizing the color value properties (red or blue) added to each unique variable//
+        //to "return" (but really defining a new) to the color of the circle class// 
+        
+        iguanaRestaurants.eachLayer(function (layer) {
+            layer.on('mouseover', function (e) {
+                e.target.setStyle({
+                    color: 'yellow',
+                    fillColor: 'yellow'
+                });
+            });
+            layer.on('mouseout', function (e) {
+                if (e.target.color == 'red') {
+                    e.target.setStyle(redIguanaOptions);
+                } else if (e.target.color == 'blue') {
+                    e.target.setStyle(blueIguanaOptions);
+                }
+            });
+        });
     </script>
 
 </body>
