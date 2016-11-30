@@ -109,12 +109,19 @@
             })
         }).addTo(map);
 
-        var markerLocation = L.latLng(40.7718, -111.9124);
-
-        var newMarker = L.marker(markerLocation, {
-            draggable: true
+        map.on('click', function (e) {
+            var newMarker = L.marker(e.latlng, {
+                draggable: true
+            })
+            console.log(newMarker);
+            newMarker.addTo(map);
+            newMarker.on('dragend', function (e){
+                var movedMarker = newMarker.getLatLng();
+                console.log(movedMarker);
+            })
+//            var redIguanadist = newMarker.distanceTo(redIguana);
+//            newMarker.on('dragend')
         });
-        
         
     </script>
 
