@@ -19,47 +19,47 @@
             font-family: "Noto Sans", sans-serif;
             color: #3d3d3d;
         }
-        
+
         section {
             width: 960px;
             margin: 20px auto;
         }
-        
+
         h1 {
             width: 960px;
             margin: 20px auto;
             font-family: "Lora", serif;
             letter-spacing: .04em;
         }
-        
+
         h2 {
             font-family: "Lora", serif;
             letter-spacing: .04em;
         }
-        
+
         p {
             font-size: 1em;
             line-height: 1.5em;
         }
-        
+
         a {
             color: #005daa;
             font-weight: bold;
             text-decoration: none;
         }
-        
+
         a:hover {
             text-decoration: underline;
         }
-        
+
         ul {
             padding-left: 20px;
         }
-        
+
         li {
             margin: 10px 0
         }
-        
+
         #map {
             width: 960px;
             height: 540px;
@@ -109,20 +109,52 @@
             })
         }).addTo(map);
 
-        map.on('click', function (e) {
-            var newMarker = L.marker(e.latlng, {
+        var newMarker;
+
+        map.on('click', function(e) {
+
+            if(map.hasLayer(newMarker)){
+                map.removeLayer(newMarker);
+            }
+
+            var clickLocation = e.latlng;
+
+            var distance = clickLocation.distanceTo(redIguana)/1000;
+
+            newMarker = L.marker(e.latlng, {
                 draggable: true
+            }).addTo(map);
+
+            var popup = buildPopup(distance);
+
+            newMarker.bindPopup(popup).openPopup();
+
+
+            newMarker.on('dragend', function(e){
+
+                var newPosition = newMarker.getLatLng();
+
+                var newDistance = newPosition.distanceTo(redIguana)/1000;
+
+                var popup = buildPopup(newDistance);
+
+                // solution 1
+                newMarker.bindPopup(popup).openPopup();
+
+                // solution 2
+                // newMarker.getPopup().setContent(popup);
+                // newMarker.openPopup();
+
             })
-            console.log(newMarker);
-            newMarker.addTo(map);
-            newMarker.on('dragend', function (e){
-                var movedMarker = newMarker.getLatLng();
-                console.log(movedMarker);
-            })
-//            var redIguanadist = newMarker.distanceTo(redIguana);
-//            newMarker.on('dragend')
-        });
-        
+
+        }); // end on click event
+
+        function buildPopup(distance) {
+
+          return 'distance to red iguana: ' + distance.toLocaleString() + 'km';
+
+        }
+
     </script>
 
 </body>
