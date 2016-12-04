@@ -17,27 +17,33 @@
             font-family: Lato, sans-serif;
             color: #0D0000;
         }
+        
         header {
             padding: 6px 10%;
         }
+        
         h1 {
             display: inline-block;
             margin-right: 20px;
             color: #001323;
         }
+        
         h2 {
             display: inline-block;
             color: #001323;
         }
+        
         #map {
             width: 80%;
             height: 540px;
             margin: 10px auto;
         }
+        
         footer {
             padding: 6px 10%;
             width: 80%;
         }
+        
         p {
             font-size: 1em;
             color: #001323;
@@ -58,11 +64,60 @@
         <p>Additional information about the data and map goes here.</p>
     </footer>
 
+    <script src="power-plants.js"></script>
+
     <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
     <script>
+        // build your Leaflet map here!
 
-      // build your Leaflet map here!
+        console.log(plants);
 
+
+
+        var map = L.map('map', {
+            center: [36, -94],
+            zoom: 4
+        });
+
+        var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        });
+        tiles.addTo(map);
+
+
+        //        L.geoJson(plants, {
+        //            pointToLayer: function (feature, latlng) {
+        //                return L.circleMarker(latlng, {
+        //                    color: 'orange',
+        //                    weight: 1,
+        //                    fillColor: 'yellow',
+        //                    fillOpacity: 1,
+        //                    radius: 2
+        //                });
+        //            }
+        //        }).addTo(map);
+
+        L.geoJson(plants, {
+                    pointToLayer: function (feature, latlng) {
+                        return L.circleMarker(latlng, {
+                            color: 'Indigo ',
+                            weight: 1,
+                            fillColor: 'DodgerBlue ',
+                            fillOpacity: 1,
+                            radius: 2.5
+                        });
+                    },
+            
+            //filter to display only small scale Hydro plants (producing less than 1 MW) in U.S.//
+                    filter: function (feature, layer) {
+                        if (feature.properties.capacity_mw < 1 && feature.properties.fuel_source.Hydro) {
+                            return feature;
+                        }
+                    }
+                }).addTo(map);
+        
     </script>
 
 </body>
