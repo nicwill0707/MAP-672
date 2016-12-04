@@ -17,27 +17,33 @@
             font-family: Lato, sans-serif;
             color: #0D0000;
         }
+        
         header {
             padding: 6px 10%;
         }
+        
         h1 {
             display: inline-block;
             margin-right: 20px;
             color: #001323;
         }
+        
         h2 {
             display: inline-block;
             color: #001323;
         }
+        
         #map {
             width: 80%;
             height: 540px;
             margin: 10px auto;
         }
+        
         footer {
             padding: 6px 10%;
             width: 80%;
         }
+        
         p {
             font-size: 1em;
             color: #001323;
@@ -47,46 +53,76 @@
 
 <body>
     <header>
-        <h1>Map Title</h1>
-        <h2>Map Subtitle</h2>
+        <h1>Hydropower</h1>
+        <h2>Plant location and output in U.S.</h2>
     </header>
 
     <div id='map'></div>
 
     <footer>
-        <p>Map authored by YOUR NAME</p>
-        <p>Additional information about the data and map goes here.</p>
+        <p>Map authored by Nic Williamson</p>
+        <p>Here you will find a representation of the hydropower plants in the United States. The circle size portrays plant output in megawatts (larger circles = higher output). According to the U.S. Army Corps of Engineers, hydropower generates about 10% of the nation's energy. <br> </p>
     </footer>
     <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
     <script src="power-plants.js"></script>
     <script>
+        var map = L.map('map', {
+            center: [36, -94],
+            zoom: 4,
+        });
 
-      var map = L.map('map', {
-          center: [36,-94],
-          zoom: 4,
-      });
+        var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        });
 
-      var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-          subdomains: 'abcd',
-          maxZoom: 19
-      });
+        tiles.addTo(map);
+        
 
-      tiles.addTo(map);
+        plants.features.sort(function (a, b) {
+            return b.properties.capacity_mw - a.properties.capacity_mw;
+        });
 
-      L.geoJson(plants, {
-          pointToLayer: function(feature,latlng) {
-              return L.circleMarker(latlng, {
-                 color: 'orange',
-                 weight: 1,
-                 fillColor: 'yellow',
-                 fillOpacity: 1,
-                 radius: 2
-              });
-          }
-      }).addTo(map);
+        L.geoJson(plants, {
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, {
+                    color: 'MidnightBlue ',
+                    weight: 1,
+                    fillColor: 'PowderBlue',
+                    fillOpacity: .8,
+                    radius: getRadius(feature.properties.capacity_mw)
+                });
+            },
+            filter: function (feature, layer) {
+                if (feature.properties.fuel_source.Hydro) {
+                    return feature;
+                }
+            },
+            onEachFeature: function (feature, layer) {
+                layer.on('mouseover', function () {
+                    layer.setStyle({
+                        fillColor: 'Tomato'
+                    });
+                });
+                layer.on('mouseout', function () {
+                    layer.setStyle({
+                        fillColor: 'PowderBlue'
+                    });
+                });
+                
+                var popupName = feature.properties.plant_name + '<br>' + "Output: " + feature.properties.capacity_mw + " MW";
+                
+                layer.bindPopup(popupName)
+            }
+        }).addTo(map);
 
+        console.log(Math.PI);
 
+        function getRadius(area) {
+            var radius = Math.sqrt(area / Math.PI);
+            return radius * .6;
+        }
     </script>
 
 </body>
