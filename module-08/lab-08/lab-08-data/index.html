@@ -17,33 +17,33 @@
             font-family: Lato, sans-serif;
             color: #0D0000;
         }
-        
+
         header {
             padding: 6px 10%;
         }
-        
+
         h1 {
             display: inline-block;
             margin-right: 20px;
             color: #001323;
         }
-        
+
         h2 {
             display: inline-block;
             color: #001323;
         }
-        
+
         #map {
             width: 80%;
             height: 540px;
             margin: 10px auto;
         }
-        
+
         footer {
             padding: 6px 10%;
             width: 80%;
         }
-        
+
         p {
             font-size: 1em;
             color: #001323;
@@ -78,7 +78,7 @@
         });
 
         tiles.addTo(map);
-        
+
 
         plants.features.sort(function (a, b) {
             return b.properties.capacity_mw - a.properties.capacity_mw;
@@ -110,9 +110,9 @@
                         fillColor: 'PowderBlue'
                     });
                 });
-                
-                var popupName = feature.properties.plant_name + '<br>' + "Output: " + feature.properties.capacity_mw + " MW";
-                
+
+                var popupName = "<b>" + feature.properties.plant_name + '</b><br>' + "Output: " + feature.properties.capacity_mw + " MW";
+
                 layer.bindPopup(popupName)
             }
         }).addTo(map);
